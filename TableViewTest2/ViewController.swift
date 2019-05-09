@@ -8,10 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var animals = ["Cat", "Dog", "Whale", "Pig", "Bird"]
+    var korean = ["고양이", "개", "고래", "돼지", "새"]
     
     @IBOutlet weak var myTableView: UITableView!
-    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,42 +22,39 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        if section == 0 {
-            return "Section 1"
-        }else{
-            return "Section 2"
-        }
-    }
-    
-    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String?{
-        if section == 0 {
-            return "End of Section 1"
-        }else{
-            return "End of Section 2 "
-        }
+        return animals.count
     }
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = myTableView.dequeueReusableCell(withIdentifier: "RE", for: indexPath)
-        let row = indexPath.row
-        let sec = indexPath.section
         
-        cell.textLabel?.text = "Section" + String(sec)
-        cell.detailTextLabel?.text = "Row" + String(row)
-        
-        count = count + 1
+        cell.textLabel?.text = animals[indexPath.row]
+        cell.detailTextLabel?.text = korean[indexPath.row]
         
         return cell
     }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section Header\(section)"
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        return 100.0
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        print("section = \(indexPath.section)   row = \(indexPath.row)")
+    }
+    
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String?{
+        return "Section Footer\(section)"
+    }
+    
 }
 
